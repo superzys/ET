@@ -1,7 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using ETModel;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
+using MongoDB.Driver;
 
 namespace ETHotfix
 {
@@ -55,29 +61,42 @@ namespace ETHotfix
 			DBQueryResponse dbQueryResponse = (DBQueryResponse)await session.Call(new DBQueryRequest { CollectionName = typeof(T).Name, Id = id, NeedCache = needCache });
 			return (T)dbQueryResponse.Component;
 		}
-
-		public static async Task<List<T>> QueryBatch<T>(this DBProxyComponent self, List<long> ids, bool needCache = true) where T : ComponentWithId
+		
+		/// <summary>
+		/// 根据查询表达式查询
+		/// </summary>
+		/// <param name="self"></param>
+		/// <param name="exp"></param>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public static async Task<List<ComponentWithId>> Query<T>(this DBProxyComponent self, Expression<Func<T ,bool>> exp) where T: ComponentWithId
 		{
-			List<T> list = new List<T>();
-			Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
-			DBQueryBatchResponse dbQueryBatchResponse = (DBQueryBatchResponse)await session.Call(new DBQueryBatchRequest { CollectionName = typeof(T).Name, IdList = ids, NeedCache = needCache});
-			foreach (ComponentWithId component in dbQueryBatchResponse.Components)
-			{
-				list.Add((T)component);
-			}
-			return list;
+			ExpressionFilterDefinition<T> filter = new ExpressionFilterDefinition<T>(exp);
+			IBsonSerializerRegistry serializerRegistry = BsonSerializer.SerializerRegistry;
+			IBsonSerializer<T> documentSerializer = serializerRegistry.GetSerializer<T>();
+			string json = filter.Render(documentSerializer, serializerRegistry).ToJson();
+			return await self.Query<T>(json);
 		}
 
-		public static async Task<List<T>> QueryJson<T>(this DBProxyComponent self, string json) where T : ComponentWithId
+		public static async Task<List<ComponentWithId>> Query<T>(this DBProxyComponent self, List<long> ids, bool needCache = true) where T : ComponentWithId
 		{
-			List<T> list = new List<T>();
+			Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
+			DBQueryBatchResponse dbQueryBatchResponse = (DBQueryBatchResponse)await session.Call(new DBQueryBatchRequest { CollectionName = typeof(T).Name, IdList = ids, NeedCache = needCache});
+			return dbQueryBatchResponse.Components;
+		}
+
+		/// <summary>
+		/// 根据json查询条件查询
+		/// </summary>
+		/// <param name="self"></param>
+		/// <param name="json"></param>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public static async Task<List<ComponentWithId>> Query<T>(this DBProxyComponent self, string json) where T : ComponentWithId
+		{
 			Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
 			DBQueryJsonResponse dbQueryJsonResponse = (DBQueryJsonResponse)await session.Call(new DBQueryJsonRequest { CollectionName = typeof(T).Name, Json = json });
-			foreach (ComponentWithId component in dbQueryJsonResponse.Components)
-			{
-				list.Add((T)component);
-			}
-			return list;
+			return dbQueryJsonResponse.Components;
 		}
 	}
 }
