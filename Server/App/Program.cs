@@ -96,8 +96,9 @@ namespace App
 						Game.Scene.AddComponent<GateSessionKeyComponent>();
 						Game.Scene.AddComponent<ConfigComponent>();
 						Game.Scene.AddComponent<ServerFrameComponent>();
-						// Game.Scene.AddComponent<HttpComponent>();
-						break;
+						 Game.Scene.AddComponent<HttpComponent>();
+					    Game.Scene.AddComponent<WeChatAppDecrypt,string,string>("","");
+                        break;
 					case AppType.Benchmark:
 						Game.Scene.AddComponent<NetOuterComponent>();
 						Game.Scene.AddComponent<BenchmarkComponent, IPEndPoint>(clientConfig.IPEndPoint);
