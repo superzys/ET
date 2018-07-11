@@ -27,5 +27,10 @@ namespace ETModel
 		{
 			return ClientNow();
 		}
+
+	    public static int GetDay()
+	    {
+	        return DateTime.UtcNow.Day;
+	    }
     }
 }

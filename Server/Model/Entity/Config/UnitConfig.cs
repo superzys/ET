@@ -1,6 +1,4 @@
-using ETModel;
-
-namespace ETHotfix
+namespace ETModel
 {
 	[ETModel.Config(ETModel.AppType.Client)]
 	public partial class UnitConfigCategory : ACategory<UnitConfig>

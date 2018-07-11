@@ -119,7 +119,6 @@
   <ItemGroup>
     <Folder Include="Base\RecyclableMemoryStream\" />
     <Folder Include="Component\Config\" />
-    <Folder Include="Entity\GameObj\" />
     <Folder Include="Module\Message\Network\KCP\" />
     <Folder Include="Module\Message\Network\TCP\" />
     <Folder Include="Module\Numeric\" />

@@ -17,6 +17,10 @@ namespace ETModel
         public string AvatarUrl { get; set; }
         public string UnionId { get; set; }
 
+        public GameInfoObj GameInfo { get; set; }
 
+        public List<GameOpObj> GameOpArr { get; set; }
+
+        public List<UserDesignObj> DesignArr { get; set; }
     }
 }

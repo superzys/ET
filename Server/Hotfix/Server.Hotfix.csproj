@@ -27,7 +27,6 @@
     <ProjectReference Include="..\Model\Server.Model.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Module\WXGame\System\" />
     <Folder Include="Module\Tools\" />
   </ItemGroup>
 </Project>

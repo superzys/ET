@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using ETModel;
 using System.Threading.Tasks;
 using MongoDB.Bson;
@@ -10,48 +11,70 @@ namespace ETHotfix
     public class LoginController : AHttpHandler
     {
         [Post] // url-> /Login
-        public async Task<HttpResult> LoginWx(WxLoginNet wxInfo)
+        public async Task<HttpResult> LoginWx(WxLoginReqNet wxInfo)
         {
-            WechatLoginInfoEgret wxLoginInfo = new WechatLoginInfoEgret();
-            ReflexCopyData.CopyEntityToObj(wxLoginInfo, wxInfo);
-
-            WeChatAppDecrypt wxDecCmp = Game.Scene.GetComponent<WeChatAppDecrypt>();
-            //            OpenIdAndSessionKey sessionInfo = wxDecCmp.GetWechatUserSessionInfo(wxLoginInfo);
-            OpenIdAndSessionKey sessionInfo = new OpenIdAndSessionKey()
+            try
             {
-                openid = "12343214",
-                session_key = "32324324324"
-            };
-            WechatUserInfo wxUserInfo = new WechatUserInfo();
-            ReflexCopyData.CopyEntityToObj(wxUserInfo, wxInfo);
-            wxUserInfo.openId = sessionInfo.openid;
-            wxUserInfo.session_key = sessionInfo.session_key;
+                //有userid 并且可转换long
+                long userID = 0;
+                if (wxInfo.UserId != null && wxInfo.UserId != "")
+                {
+                    try
+                    {
+                        userID = long.Parse(wxInfo.UserId);
 
-            UserInfo userInfo = await UserInfoFactory.GetOrCreate(wxUserInfo);
-            WxLoginReNet reNet = new WxLoginReNet();
-            
-            reNet.UserId = userInfo.Id.ToString();
+                    }
+                    catch (Exception e)
+                    {
+                        userID = 0;
+                    }
+                }
+                UserInfo userInfo = null;
+                if (userID > 0)
+                {
+                    //能取到之前的用户的话
+                    userInfo = await UserInfoFactory.GetOrCreate(userID);
+                    if (userInfo != null)
+                    {
+                        UserInfoFactory.OneUserOnLine(userInfo);
 
-            //            return Ok(msg:"post wx done", data: userInfo);
+                        WxLoginResNet resNet = userInfo.GetLoginResNetObj();
 
-                        return Ok(reNet.ToJson());
-//            return Ok("登陆成功！");
+                        return Ok(resNet.ToJson());
+                    }
+                }
+                //没有的话只能 走微信验证拿到openId 了
+                WechatLoginInfoEgret wxLoginInfo = new WechatLoginInfoEgret();
+                ReflexCopyData.CopyEntityToObj(wxLoginInfo, wxInfo);
+
+                WeChatAppDecrypt wxDecCmp = Game.Scene.GetComponent<WeChatAppDecrypt>();
+                //            OpenIdAndSessionKey sessionInfo = wxDecCmp.GetWechatUserSessionInfo(wxLoginInfo);
+                OpenIdAndSessionKey sessionInfo = new OpenIdAndSessionKey()
+                {
+                    openid = "12343214",
+                    session_key = "32324324324"
+                };
+                WechatUserInfo wxUserInfo = new WechatUserInfo();
+                ReflexCopyData.CopyEntityToObj(wxUserInfo, wxInfo);
+                wxUserInfo.openId = sessionInfo.openid;
+                wxUserInfo.session_key = sessionInfo.session_key;
+                //去数据库取或者创建
+                userInfo = await UserInfoFactory.GetOrCreate(wxUserInfo);
+
+                UserInfoFactory.OneUserOnLine(userInfo);
+                WxLoginResNet reNet = new WxLoginResNet();
+                reNet.UserId = userInfo.Id.ToString();
+
+                return Ok(reNet.ToJson());
+            }
+            catch (Exception e)
+            {
+                return Ok("{error:0} ");
+            }
+
+            //            return Ok("登陆成功！");
         }
-        /// <summary>
-        /// 登录已有账号
-        /// </summary>
-        /// <param name="wxInfo"></param>
-        /// <returns></returns>
-        public async Task<HttpResult> LoginWxWithAccount(WxLoginAccNet wxInfo)
-        {
-            UserInfo userInfo = await UserInfoFactory.GetOrCreate(wxInfo.UserId);
-            WxLoginReNet reNet = new WxLoginReNet();
-
-            reNet.UserId = userInfo.Id.ToString();
-
-
-            return Ok(reNet.ToJson());
-        }
+      
 
         [Post] // url-> /Login
         public object Login(Account account)

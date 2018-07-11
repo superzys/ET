@@ -26,6 +26,11 @@ namespace ETHotfix
                 userInfo.Province = wxInfo.province;
                 userInfo.AvatarUrl = wxInfo.avatarUrl;
                 userInfo.UnionId = wxInfo.unionId;
+
+                userInfo.GameInfo = ComponentFactory.Create<GameInfoObj>();
+                userInfo.GameOpArr = new List<GameOpObj>();
+                userInfo.DesignArr = new List<UserDesignObj>();
+
                 //                userInfo = userInfo;
                 await dbProxyComponent.Save(userInfo, false);
             }
@@ -44,5 +49,25 @@ namespace ETHotfix
 
             return userInfo;
         }
+        /// <summary>
+        /// 一个用户上线了
+        /// 把玩家数据挂载
+        /// 挂载计时器
+        /// </summary>
+        /// <param name="userInfo"></param>
+        public static void OneUserOnLine(UserInfo userInfo)
+        {
+            WxGamer gamer = ComponentFactory.CreateWithId<WxGamer>(userInfo.Id);
+            gamer.LastAliveTime = TimeHelper.ClientNowSeconds();
+
+            userInfo.FixCheckOnLogin();
+
+            gamer.AddComponent(userInfo);
+
+            gamer.AddComponent<WxGamerTimerComponent>();
+
+            Game.Scene.GetComponent<WxUserMangerComponent>().Add(gamer);
+        }
+
     }
 }
