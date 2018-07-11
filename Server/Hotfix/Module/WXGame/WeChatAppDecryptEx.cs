@@ -55,15 +55,40 @@ namespace ETHotfix
         /// </summary>
         /// <param name="code">Json数据包</param>
         /// <returns>包含OpenId和SessionKey的类</returns>
-        public static OpenIdAndSessionKey DecodeOpenIdAndSessionKey(this WeChatAppDecrypt self, WechatLoginInfo loginInfo)
+        public static OpenIdAndSessionKey DecodeOpenIdAndSessionKey(this WeChatAppDecrypt self, string codeStr)
         {
-            string ssStr = self.GetOpenIdAndSessionKeyString(loginInfo.code);
+            string ssStr = self.GetOpenIdAndSessionKeyString(codeStr);
             OpenIdAndSessionKey oiask = JsonHelper.FromJson<OpenIdAndSessionKey>(ssStr);
             if (!String.IsNullOrEmpty(oiask.errcode))
                 return null;
             return oiask;
         }
 
+
+        /// <summary>
+        /// GET请求
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        private static string GetResponse(this WeChatAppDecrypt self, string url)
+        {
+            if (url.StartsWith("https"))
+                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
+
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response = httpClient.GetAsync(url).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                string result = response.Content.ReadAsStringAsync().Result;
+                return result;
+            }
+            return null;
+        }
+
+        #region 解密验证
         /// <summary>
         /// 根据微信小程序平台提供的签名验证算法验证用户发来的数据是否有效
         /// </summary>
@@ -159,7 +184,7 @@ namespace ETHotfix
             if (String.IsNullOrEmpty(loginInfo.code))
                 return null;
 
-            OpenIdAndSessionKey oiask = self.DecodeOpenIdAndSessionKey(loginInfo);
+            OpenIdAndSessionKey oiask = self.DecodeOpenIdAndSessionKey(loginInfo.code);
 
             if (oiask == null)
                 return null;
@@ -172,27 +197,28 @@ namespace ETHotfix
             return userInfo;
         }
 
+
+
+        #endregion
         /// <summary>
-        /// GET请求
+        /// 获取微信用户的session 情况
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="self"></param>
+        /// <param name="loginInfo"></param>
         /// <returns></returns>
-        private static string GetResponse(this WeChatAppDecrypt self, string url)
+        public static OpenIdAndSessionKey GetWechatUserSessionInfo(this WeChatAppDecrypt self, WechatLoginInfoEgret loginInfo)
         {
-            if (url.StartsWith("https"))
-                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
+            if (loginInfo == null)
+                return null;
 
-            HttpClient httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Accept.Add(
-            new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = httpClient.GetAsync(url).Result;
+            if (String.IsNullOrEmpty(loginInfo.code))
+                return null;
 
-            if (response.IsSuccessStatusCode)
-            {
-                string result = response.Content.ReadAsStringAsync().Result;
-                return result;
-            }
-            return null;
+            OpenIdAndSessionKey oiask = self.DecodeOpenIdAndSessionKey(loginInfo.code);
+
+            if (oiask == null)
+                return null;
+            return oiask;
         }
     }
 }

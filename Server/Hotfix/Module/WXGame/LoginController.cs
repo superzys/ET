@@ -10,21 +10,47 @@ namespace ETHotfix
     public class LoginController : AHttpHandler
     {
         [Post] // url-> /Login
-        public async Task<HttpResult> LoginWx(WechatLoginInfo wxInfo)
+        public async Task<HttpResult> LoginWx(WxLoginNet wxInfo)
         {
+            WechatLoginInfoEgret wxLoginInfo = new WechatLoginInfoEgret();
+            ReflexCopyData.CopyEntityToObj(wxLoginInfo, wxInfo);
+
             WeChatAppDecrypt wxDecCmp = Game.Scene.GetComponent<WeChatAppDecrypt>();
-            //            WechatUserInfo wxUserInfo = wxDecCmp.Decrypt(wxInfo);
-            WechatUserInfo wxUserInfo = new WechatUserInfo()
+            //            OpenIdAndSessionKey sessionInfo = wxDecCmp.GetWechatUserSessionInfo(wxLoginInfo);
+            OpenIdAndSessionKey sessionInfo = new OpenIdAndSessionKey()
             {
-                openId = "123412124",
-                nickName = "test"
+                openid = "12343214",
+                session_key = "32324324324"
             };
+            WechatUserInfo wxUserInfo = new WechatUserInfo();
+            ReflexCopyData.CopyEntityToObj(wxUserInfo, wxInfo);
+            wxUserInfo.openId = sessionInfo.openid;
+            wxUserInfo.session_key = sessionInfo.session_key;
+
             UserInfo userInfo = await UserInfoFactory.GetOrCreate(wxUserInfo);
+            WxLoginReNet reNet = new WxLoginReNet();
+            
+            reNet.UserId = userInfo.Id.ToString();
+
+            //            return Ok(msg:"post wx done", data: userInfo);
+
+                        return Ok(reNet.ToJson());
+//            return Ok("登陆成功！");
+        }
+        /// <summary>
+        /// 登录已有账号
+        /// </summary>
+        /// <param name="wxInfo"></param>
+        /// <returns></returns>
+        public async Task<HttpResult> LoginWxWithAccount(WxLoginAccNet wxInfo)
+        {
+            UserInfo userInfo = await UserInfoFactory.GetOrCreate(wxInfo.UserId);
+            WxLoginReNet reNet = new WxLoginReNet();
+
+            reNet.UserId = userInfo.Id.ToString();
 
 
-//            return Ok(msg:"post wx done", data: userInfo);
-
-            return Ok("登陆成功！");
+            return Ok(reNet.ToJson());
         }
 
         [Post] // url-> /Login
@@ -41,54 +67,5 @@ namespace ETHotfix
             return Ok("登陆成功！");
         }
 
-        [Get] // url-> /PushInfo?name=11&age=1111
-        public string PushInfo(string name, int age, HttpListenerRequest req, HttpListenerResponse resp)
-        {
-            Log.Info(name);
-            Log.Info($"{age}");
-            return "ok";
-        }
-
-        [Get("t")] // url-> /t
-        public int Test()
-        {
-            System.Console.WriteLine("");
-            return 1;
-        }
-
-        [Post] // url-> /Test1
-        public object Test1(HttpListenerRequest req)
-        {
-            return new
-            {
-
-            };
-        }
-
-        [Get] // url-> /Test2
-        public int Test2(HttpListenerResponse resp)
-        {
-            return 1;
-        }
-
-        [Get] // url-> /GetRechargeRecord
-        public async Task<HttpResult> GetRechargeRecord(long id)
-        {
-            // var db = Game.Scene.GetComponent<DBProxyComponent>();
-
-            // var info = await db.Query<RechargeRecord>(id);
-
-            await Task.Delay(1000); // 用于测试
-
-            object info = null;
-            if (info != null)
-            {
-                return Ok(data: info);
-            }
-            else
-            {
-                return Error("ID不存在！");
-            }
-        }
     }
 }

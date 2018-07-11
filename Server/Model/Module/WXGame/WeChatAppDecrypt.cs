@@ -23,6 +23,20 @@ namespace ETModel
 
     }
     /// <summary>
+    /// 白鹭的会啊直接发code 和用户信息。 
+    /// </summary>
+    public class WechatLoginInfoEgret
+    {
+        public string code { get; set; }
+        public string nickName { get; set; }
+        public string gender { get; set; }
+        public string city { get; set; }
+        public string province { get; set; }
+        public string country { get; set; }
+        public string avatarUrl { get; set; }
+    }
+
+    /// <summary>
     /// 微信小程序登录信息结构
     /// </summary>
     public class WechatLoginInfo
@@ -39,8 +53,9 @@ namespace ETModel
     public class WechatUserInfo
     {
         public string openId { get; set; }
+        public string session_key { get; set; }
         public string nickName { get; set; }
-        public string gender { get; set; }
+        public int gender { get; set; }
         public string city { get; set; }
         public string province { get; set; }
         public string country { get; set; }
