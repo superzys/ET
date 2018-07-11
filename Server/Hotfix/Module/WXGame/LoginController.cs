@@ -10,14 +10,32 @@ namespace ETHotfix
     public class LoginController : AHttpHandler
     {
         [Post] // url-> /Login
+        public async Task<HttpResult> LoginWx(WechatLoginInfo wxInfo)
+        {
+            WeChatAppDecrypt wxDecCmp = Game.Scene.GetComponent<WeChatAppDecrypt>();
+            //            WechatUserInfo wxUserInfo = wxDecCmp.Decrypt(wxInfo);
+            WechatUserInfo wxUserInfo = new WechatUserInfo()
+            {
+                openId = "123412124",
+                nickName = "test"
+            };
+            UserInfo userInfo = await UserInfoFactory.GetOrCreate(wxUserInfo);
+
+
+//            return Ok(msg:"post wx done", data: userInfo);
+
+            return Ok("登陆成功！");
+        }
+
+        [Post] // url-> /Login
         public object Login(Account account)
         {
             var jsonWriterSettings = new JsonWriterSettings { OutputMode = JsonOutputMode.Strict };
 
             string bsonStr = account.ToJson(jsonWriterSettings);
 
-            string str1 =  account.ToJson();
-            Account acc =  JsonHelper.FromJson<Account>(bsonStr);
+            string str1 = account.ToJson();
+            Account acc = JsonHelper.FromJson<Account>(bsonStr);
             Account acc1 = JsonHelper.FromJson<Account>(str1);
 
             return Ok("登陆成功！");

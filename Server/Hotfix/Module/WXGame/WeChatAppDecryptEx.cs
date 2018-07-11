@@ -10,11 +10,11 @@ using ETModel;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class WeChatAppDecryptAwakeSystem : AwakeSystem<WeChatAppDecrypt,string,string>
+    public class WeChatAppDecryptAwakeSystem : AwakeSystem<WeChatAppDecrypt>
     {
-        public override void Awake(WeChatAppDecrypt self, string str, string str1)
+        public override void Awake(WeChatAppDecrypt self)
         {
-            self.Awake(str,str1);
+            self.Awake();
         }
     }
 
@@ -26,10 +26,10 @@ namespace ETHotfix
         /// </summary>
         /// <param name="appId">应用程序的AppId</param>
         /// <param name="appSecret">应用程序的AppSecret</param>
-        public static void Awake(this WeChatAppDecrypt self,string appId, string appSecret)
+        public static void Awake(this WeChatAppDecrypt self)
         {
-            self.appId = appId;
-            self.appSecret = appSecret;
+            self.appId = "wxc796a64f6bd2ef40";
+            self.appSecret = "9d78be461e790dd2518746fc3f83528a";
         }
 
 
