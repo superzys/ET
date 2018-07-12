@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSharpx;
-using ETModel;
+﻿using ETModel;
 using MongoDB.Bson;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ETHotfix
 {
@@ -45,6 +42,8 @@ namespace ETHotfix
                                 userInfo.GameInfo.SignDayNum = data.SignRewardArr.Length - 1;
                             }
 
+                            userInfo.GameInfo.LastSignDay = TimeHelper.GetDay();
+                            userInfo.GameInfo.LastSignTime = TimeHelper.ClientNow();
                             WxLoginRewardResNet resNet = new WxLoginRewardResNet();
                             userInfo.GameInfo.RemainSignNumToday--;
                             resNet.AddGoldNum = data.SignRewardArr[userInfo.GameInfo.SignDayNum];

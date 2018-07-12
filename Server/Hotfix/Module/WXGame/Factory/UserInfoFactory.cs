@@ -57,7 +57,7 @@ namespace ETHotfix
         /// <param name="userInfo"></param>
         public static void OneUserOnLine(UserInfo userInfo)
         {
-            WxGamer gamer = ComponentFactory.CreateWithId<WxGamer>(userInfo.Id);
+            WxGamer gamer = ComponentFactory.CreateWithId<WxGamer>(userInfo.InstanceId);
             gamer.LastAliveTime = TimeHelper.ClientNowSeconds();
 
             userInfo.FixCheckOnLogin();

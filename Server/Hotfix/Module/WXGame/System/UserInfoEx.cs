@@ -14,11 +14,12 @@ namespace ETHotfix
             {
                 UserId = self.Id.ToString(),
                 SessonId = self.InstanceId.ToString(),
+                Gold = self.GameInfo.Gold.ToString(),
                 ChapterId = self.GameInfo.ChapterId.ToString(),
                 PlotId = self.GameInfo.PlotId.ToString(),
                 LoginRewardArr = new List<int>(data.SignRewardArr),
                 SignedNum = self.GameInfo.SignDayNum,
-                IsSignedToday = self.GameInfo.RemainSignNumToday>0?true:false,
+                RemainSignNumToday = self.GameInfo.RemainSignNumToday,
                 ShareTodayNum = self.GameInfo.ShareNumToday
 
             };

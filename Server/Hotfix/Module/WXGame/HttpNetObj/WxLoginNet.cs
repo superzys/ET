@@ -23,12 +23,13 @@ namespace ETHotfix
         //给客户端一个sessonId 做验证吧
         public string SessonId { get; set; }
         public string UserId { get; set; }
+        public string Gold { get; set; }
         public string ChapterId { get; set; }
 //        public int PlotIndex { get; set; }
         public string PlotId { get; set; }
         public List<int> LoginRewardArr { get; set; }
         public int SignedNum { get; set; }
-        public bool IsSignedToday { get; set; }
+        public int RemainSignNumToday { get; set; }
         public int ShareTodayNum { get; set; }
 
     }
