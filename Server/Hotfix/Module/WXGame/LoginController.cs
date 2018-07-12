@@ -57,7 +57,6 @@ namespace ETHotfix
                 
                 WxLoginResNet reNet = userInfo.GetLoginResNetObj();
 
-                return Ok("{\"error\":0}");
                 return Ok(reNet.ToJson());
             }
             catch (Exception e)
