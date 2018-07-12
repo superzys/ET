@@ -30,6 +30,18 @@ namespace ETHotfix
         /// <param name="self"></param>
         public static void FixCheckOnLogin(this UserInfo self)
         {
+            if(self.GameInfo == null)
+            {
+                self.GameInfo = ComponentFactory.Create<GameInfoObj>();
+            }
+            if (self.GameOpArr == null)
+            {
+                self.GameOpArr = new List<GameOpObj>();
+            }
+            if (self.DesignArr == null)
+            {
+                self.DesignArr = new List<UserDesignObj>();
+            }
             int curDay = TimeHelper.GetDay();
             //今天首次登录
             if (self.GameInfo.LastLoginDay != curDay)

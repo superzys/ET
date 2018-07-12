@@ -98,6 +98,8 @@ namespace App
 						Game.Scene.AddComponent<ServerFrameComponent>();
 						 Game.Scene.AddComponent<HttpComponent>();
 					    Game.Scene.AddComponent<WeChatAppDecrypt>();
+					    Game.Scene.AddComponent<WxUserMangerComponent>();
+                        
                         break;
 					case AppType.Benchmark:
 						Game.Scene.AddComponent<NetOuterComponent>();

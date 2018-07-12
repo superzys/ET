@@ -28,7 +28,7 @@ namespace ETHotfix
 		/// <summary>
 		///关卡 
 		/// </summary>
-		public long[] PoltIDArr { get; set; }
+		public long[] PlotIDArr { get; set; }
 
 	}
 }

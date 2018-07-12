@@ -1,1 +1,1 @@
-{"_id":1,"SignRewardArr":[20,40,0,80,00,120,140]}
+{"_id":1,"SignRewardArr":[20,40,0,80,100,120,140],"ShareMaxNum":5,"ShareRewardNum":5}

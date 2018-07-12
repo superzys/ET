@@ -12,10 +12,12 @@ namespace ETHotfix
     {
         public string SessonId { get; set; }
         public string PlotId { get; set; }
+        public string ChapterId { get; set; }
     }
     public class WxGainPlotRewardResNet
     {
         public int RewardGold { get; set; }
+        public string UserGoldNum { get; set; }
     }
     /// <summary>
     /// 解锁新章节
@@ -23,12 +25,14 @@ namespace ETHotfix
     public class WxGainChapterRewardReqNet
     {
         public string SessonId { get; set; }
+        public string PlotId { get; set; }
         public string ChapterId { get; set; }
     }
     public class WxGainChapterRewardResNet
     {
         public bool IsSuccess { get; set; }
         public int RewardGold { get; set; }
+        public string UserGoldNum { get; set; }
     }
     /// <summary>
     /// 消耗提示
@@ -40,8 +44,8 @@ namespace ETHotfix
     }
     public class WxCostTipResNet
     {
-        public string RemainGold { get; set; }
-
+        public int CostGold { get; set; }
+        public string UserGoldNum { get; set; }
     }
 
     #endregion
@@ -53,7 +57,8 @@ namespace ETHotfix
     }
     public class WxShareOnceResNet
     {
-        public string RemainGold { get; set; }
+        public int RewardGold { get; set; }
+        public string UserGoldNum { get; set; }
     }
 
 }

@@ -19,15 +19,7 @@ namespace ETHotfix
                 long userID = 0;
                 if (wxInfo.UserId != null && wxInfo.UserId != "")
                 {
-                    try
-                    {
-                        userID = long.Parse(wxInfo.UserId);
-
-                    }
-                    catch (Exception e)
-                    {
-                        userID = 0;
-                    }
+                    userID = TypeChange.TurnStringTolong(wxInfo.UserId);
                 }
                 UserInfo userInfo = null;
                 if (userID > 0)
@@ -62,14 +54,16 @@ namespace ETHotfix
                 userInfo = await UserInfoFactory.GetOrCreate(wxUserInfo);
 
                 UserInfoFactory.OneUserOnLine(userInfo);
-                WxLoginResNet reNet = new WxLoginResNet();
-                reNet.UserId = userInfo.Id.ToString();
+                
+                WxLoginResNet reNet = userInfo.GetLoginResNetObj();
 
+                return Ok("{\"error\":0}");
                 return Ok(reNet.ToJson());
             }
             catch (Exception e)
             {
-                return Ok("{error:0} ");
+                Console.WriteLine(e);
+                return Ok("{\"error\":0}");
             }
 
             //            return Ok("登陆成功！");

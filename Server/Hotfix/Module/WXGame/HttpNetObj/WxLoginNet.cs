@@ -47,6 +47,7 @@ namespace ETHotfix
     public class WxLoginRewardResNet
     {
         public int AddGoldNum { get; set; }
+        public string UserGoldNum { get; set; }
 
     }
 

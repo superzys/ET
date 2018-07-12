@@ -6,21 +6,16 @@ using ETModel;
 
 namespace ETHotfix
 {
- 
     [HttpHandler(AppType.Gate, "/")]
-    public class RankController : AHttpHandler
+    public class WxDesignController : AHttpHandler
     {
         [Post] // url-> /GainPlotReward
-        public async Task<HttpResult> GetRankInfo(WxGetRankReqNet wxInfo)
+        public async Task<HttpResult> SendDesignIssue(WxDesignReqNet wxInfo)
         {
             try
             {
+                long sessionID = TypeChange.TurnStringTolong(wxInfo.SessonId);
 
-                long sessionID = 0;
-                if (wxInfo.SessonId != null && wxInfo.SessonId != "")
-                {
-                    sessionID = TypeChange.TurnStringTolong(wxInfo.SessonId);
-                }
                 UserInfo userInfo = null;
                 if (sessionID > 0)
                 {

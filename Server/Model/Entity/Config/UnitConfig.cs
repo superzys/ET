@@ -13,5 +13,15 @@ namespace ETModel
 		/// </summary>
 		public int[] SignRewardArr { get; set; }
 
+		/// <summary>
+		///每天分享次数 
+		/// </summary>
+		public int ShareMaxNum { get; set; }
+
+		/// <summary>
+		///分享的奖励 
+		/// </summary>
+		public int ShareRewardNum { get; set; }
+
 	}
 }

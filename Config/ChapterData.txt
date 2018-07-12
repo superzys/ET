@@ -1,4 +1,4 @@
-{"_id":1,"Name":"第一章","Desc":"米克尔","ChargeNum":0,"PoltIDArr":[1,2]}
-{"_id":2,"Name":"第二章","Desc":"纳洛","ChargeNum":0,"PoltIDArr":[2,3]}
-{"_id":3,"Name":"第三章","Desc":"麦德罗","ChargeNum":0,"PoltIDArr":[1,2,3]}
-{"_id":4,"Name":"第四章","Desc":"蒂娜","ChargeNum":1,"PoltIDArr":[1,2,3]}
+{"_id":1,"Name":"第一章","Desc":"米克尔","ChargeNum":0,"PlotIDArr":[1,2]}
+{"_id":2,"Name":"第二章","Desc":"纳洛","ChargeNum":0,"PlotIDArr":[2,3]}
+{"_id":3,"Name":"第三章","Desc":"麦德罗","ChargeNum":0,"PlotIDArr":[1,2,3]}
+{"_id":4,"Name":"第四章","Desc":"蒂娜","ChargeNum":1,"PlotIDArr":[1,2,3]}
