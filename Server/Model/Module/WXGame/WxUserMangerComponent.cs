@@ -13,18 +13,49 @@ namespace ETModel
         public static WxUserMangerComponent Instance { get; private set; }
 
         protected  readonly  Dictionary<long, WxGamer> wxUserArr = new Dictionary<long, WxGamer>();
+        protected readonly Dictionary<long, long> wxUserSessionArr = new Dictionary<long, long>();
 
         public void Awake()
         {
             Instance = this;
         }
 
-        public void Add(WxGamer player)
+        public void Add(WxGamer player,long userId)
         {
             if (!this.wxUserArr.ContainsKey(player.Id))
             {
                 this.wxUserArr.Add(player.Id, player);
             }
+            else
+            {
+                this.wxUserArr[player.Id] = player;
+            }
+
+            if (!this.wxUserSessionArr.ContainsKey(userId))
+            {
+                this.wxUserSessionArr.Add(userId, player.Id);
+            }
+            else
+            {
+                this.wxUserSessionArr[userId] = player.Id;
+            }
+        }
+        public long GetUserSessionId(long id)
+        {
+            this.wxUserSessionArr.TryGetValue(id, out long  sessionId);
+            return sessionId;
+        }
+
+        public WxGamer GetByUserId(long id)
+        {
+            this.wxUserSessionArr.TryGetValue(id, out long sessionId);
+            if (sessionId > 0)
+            {
+                this.wxUserArr.TryGetValue(id, out WxGamer gamer);
+                return gamer;
+            }
+
+            return null;
         }
 
         public WxGamer Get(long id)

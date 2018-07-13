@@ -9,6 +9,7 @@ namespace ETModel
     /// </summary>
     public class WxGamer :Entity
     {
+        public bool IsNeedCatch { get; set; }
         public long LastAliveTime { get; set; }
         public long LastSaveTime { get; set; }
     }

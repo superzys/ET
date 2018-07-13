@@ -59,14 +59,14 @@ namespace ETHotfix
         {
             WxGamer gamer = ComponentFactory.CreateWithId<WxGamer>(userInfo.InstanceId);
             gamer.LastAliveTime = TimeHelper.ClientNowSeconds();
-
+            gamer.IsNeedCatch = false;
             userInfo.FixCheckOnLogin();
 
             gamer.AddComponent(userInfo);
 
             gamer.AddComponent<WxGamerTimerComponent>();
 
-            Game.Scene.GetComponent<WxUserMangerComponent>().Add(gamer);
+            Game.Scene.GetComponent<WxUserMangerComponent>().Add(gamer, userInfo.Id);
         }
 
     }

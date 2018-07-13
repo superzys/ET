@@ -26,7 +26,7 @@ namespace ETHotfix
                     if (userInfo != null)
                     {
 
-
+                        player.IsNeedCatch = true;
                     }
                 }
                 return Ok("{\"error\":1}");

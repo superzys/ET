@@ -10,6 +10,11 @@ namespace ETHotfix
     [HttpHandler(AppType.Gate, "/")]
     public class LoginController : AHttpHandler
     {
+        /// <summary>
+        /// 这个地方应该先看缓存  缓存id 要注意。 
+        /// </summary>
+        /// <param name="wxInfo"></param>
+        /// <returns></returns>
         [Post] // url-> /Login
         public async Task<HttpResult> LoginWx(WxLoginReqNet wxInfo)
         {
@@ -24,8 +29,19 @@ namespace ETHotfix
                 UserInfo userInfo = null;
                 if (userID > 0)
                 {
-                    //能取到之前的用户的话
-                    userInfo = await UserInfoFactory.GetOrCreate(userID);
+                    WxUserMangerComponent wxUserManger = Game.Scene.GetComponent<WxUserMangerComponent>();
+
+                    WxGamer player = wxUserManger.GetByUserId(userID);
+                    if (player != null) //有缓存
+                    {
+                        userInfo = player.GetComponent<UserInfo>();
+                    }
+                    if (userInfo == null)
+                    {
+                        //能取到之前的用户的话
+                        userInfo = await UserInfoFactory.GetOrCreate(userID);
+                    }
+     
                     if (userInfo != null)
                     {
                         UserInfoFactory.OneUserOnLine(userInfo);

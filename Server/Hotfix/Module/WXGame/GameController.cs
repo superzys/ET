@@ -55,6 +55,7 @@ namespace ETHotfix
                             {
                                 userInfo.GameInfo.SignDayNum = data.SignRewardArr.Length - 1;
                             }
+                            player.IsNeedCatch = true;
                             return Ok(resNet.ToJson());
                         }
                         else
@@ -114,7 +115,7 @@ namespace ETHotfix
                                 userInfo.GameInfo.Gold += data.RewardGoldNum;
                                 resNet.RewardGold = data.RewardGoldNum;
                                 resNet.UserGoldNum = userInfo.GameInfo.Gold.ToString();
-
+                                player.IsNeedCatch = true;
                                 return Ok(resNet.ToJson());
                             }
                             else
@@ -200,6 +201,7 @@ namespace ETHotfix
                             {
                                 resNet.IsSuccess = false;
                             }
+                            player.IsNeedCatch = true;
                             return Ok(resNet.ToJson());
                         }
                         return Ok("{\"error\":2}");
@@ -249,7 +251,7 @@ namespace ETHotfix
                             resNet.UserGoldNum = userInfo.GameInfo.Gold.ToString();
                         }
                         userInfo.GameInfo.ShareNumToday++;
-
+                        player.IsNeedCatch = true;
                         return Ok(resNet.ToJson());
                     }
                 }

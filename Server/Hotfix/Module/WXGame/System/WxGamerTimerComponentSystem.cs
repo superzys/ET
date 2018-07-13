@@ -37,10 +37,14 @@ namespace ETHotfix
                 if (userInfo != null)//每秒要检测下将领信息
                 {
                     //                    userInfo.HerosIdArr;
-                    if (TimeHelper.ClientNowSeconds() - player.LastSaveTime > 300)//需要存储数据
+                    if (TimeHelper.ClientNowSeconds() - player.LastSaveTime > 10)//需要存储数据
                     {
-                        player.LastSaveTime = TimeHelper.ClientNowSeconds();
-                        await dbProxy.Save(userInfo, true);
+                        if (player.IsNeedCatch)
+                        {
+                            player.IsNeedCatch = false;
+                            player.LastSaveTime = TimeHelper.ClientNowSeconds();
+                            await dbProxy.Save(userInfo, true);
+                        }
                     }
                     if (TimeHelper.ClientNowSeconds() - player.LastAliveTime > 500) //需要移出去
                     {
