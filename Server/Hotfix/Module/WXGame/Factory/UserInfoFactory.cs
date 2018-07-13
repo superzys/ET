@@ -30,7 +30,7 @@ namespace ETHotfix
                 userInfo.GameInfo = ComponentFactory.Create<GameInfoObj>();
                 userInfo.GameOpArr = new List<GameOpObj>();
                 userInfo.DesignArr = new List<UserDesignObj>();
-
+                userInfo.GameInfo.ChapterId = 1;
                 //                userInfo = userInfo;
                 await dbProxyComponent.Save(userInfo, false);
             }

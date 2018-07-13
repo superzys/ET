@@ -24,6 +24,11 @@ namespace ETModel
 		public int ChargeNum { get; set; }
 
 		/// <summary>
+		///难度 
+		/// </summary>
+		public int HardLv { get; set; }
+
+		/// <summary>
 		///关卡 
 		/// </summary>
 		public long[] PlotIDArr { get; set; }
