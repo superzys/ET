@@ -3,6 +3,7 @@ using MongoDB.Bson;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using CSharpx;
 
 namespace ETHotfix
 {
@@ -88,8 +89,8 @@ namespace ETHotfix
             {
                 long sessionID = TypeChange.TurnStringTolong(wxInfo.SessonId);
 
-                long plotId = sessionID = TypeChange.TurnStringTolong(wxInfo.PlotId);
-                long ChapterId = sessionID = TypeChange.TurnStringTolong(wxInfo.ChapterId);
+                int plotId  = (int)TypeChange.TurnStringTolong(wxInfo.PlotId);
+                long ChapterId =  TypeChange.TurnStringTolong(wxInfo.ChapterId);
 
                 UserInfo userInfo = null;
                 if (sessionID > 0 && plotId > 0)
@@ -97,37 +98,49 @@ namespace ETHotfix
                     WxUserMangerComponent wxUserManger = Game.Scene.GetComponent<WxUserMangerComponent>();
                     //能取到之前的用户的话
                     WxGamer player = wxUserManger.Get(sessionID);
-                    userInfo = player.GetComponent<UserInfo>();
-                    if (userInfo != null)
+                    if (player != null)
                     {
-                        //没打过的 并且确实是当前进度的章节
-                        if (userInfo.GameInfo.PlotIdArr.IndexOf(plotId) < 0 && userInfo.GameInfo.ChapterId == ChapterId)
+                        userInfo = player.GetComponent<UserInfo>();
+                        if (userInfo != null)
                         {
-                            IssueData data = (IssueData)Game.Scene.GetComponent<ConfigComponent>()
-                                .Get(typeof(IssueData), (int)plotId);
-                            ChapterData chapterData = (ChapterData)Game.Scene.GetComponent<ConfigComponent>()
-                                .Get(typeof(ChapterData), (int)ChapterId);
-                            if (chapterData.PlotIDArr.Contains(plotId))
+                            //没打过的 并且确实是当前进度的章节
+//                      章节可重复不能此检测      userInfo.GameInfo.PlotIdArr.IndexOf(plotId) < 0 &&
+                            if (userInfo.GameInfo .PlotId == plotId && userInfo.GameInfo.ChapterId == ChapterId)
                             {
-                                userInfo.GameInfo.PlotIdArr.Add(plotId);
-                                WxGainPlotRewardResNet resNet = new WxGainPlotRewardResNet();
+                                IssueData data = (IssueData)Game.Scene.GetComponent<ConfigComponent>()
+                                    .Get(typeof(IssueData), (int)plotId);
+                                ChapterData chapterData = (ChapterData)Game.Scene.GetComponent<ConfigComponent>()
+                                    .Get(typeof(ChapterData), (int)ChapterId);
+                                if (chapterData.PlotIDArr.Contains(plotId))
+                                {
+                                    int curIndex = chapterData.GetPlotIndex(plotId);
+                                    if (curIndex < (chapterData.PlotIDArr.Length -1))
+                                    {
+                                        userInfo.GameInfo.PlotId = chapterData.PlotIDArr[curIndex + 1];
+                                        userInfo.GameInfo.PlotIndex = curIndex + 1;
+                                    }
 
-                                userInfo.GameInfo.Gold += data.RewardGoldNum;
-                                resNet.RewardGold = data.RewardGoldNum;
-                                resNet.UserGoldNum = userInfo.GameInfo.Gold.ToString();
-                                player.IsNeedCatch = true;
-                                return Ok(resNet.ToJson());
+                                    userInfo.GameInfo.PlotIdArr.Add(plotId);
+                                    WxGainPlotRewardResNet resNet = new WxGainPlotRewardResNet();
+
+                                    userInfo.GameInfo.Gold += data.RewardGoldNum;
+                                    resNet.RewardGold = data.RewardGoldNum;
+                                    resNet.UserGoldNum = userInfo.GameInfo.Gold.ToString();
+                                    player.IsNeedCatch = true;
+                                    return Ok(resNet.ToJson());
+                                }
+                                else
+                                {
+                                    return Ok("{\"error\":3}");
+                                }
                             }
                             else
                             {
-                                return Ok("{\"error\":3}");
+                                return Ok("{\"error\":2}");
                             }
                         }
-                        else
-                        {
-                            return Ok("{\"error\":2}");
-                        }
                     }
+                   
                 }
                 return Ok("{\"error\":1}");
             }
@@ -151,8 +164,8 @@ namespace ETHotfix
             {
                 long sessionID = TypeChange.TurnStringTolong(wxInfo.SessonId);
 
-                long curPlotId = sessionID = TypeChange.TurnStringTolong(wxInfo.PlotId);
-                long ChapterId = sessionID = TypeChange.TurnStringTolong(wxInfo.ChapterId);
+                int curPlotId =  (int)TypeChange.TurnStringTolong(wxInfo.PlotId);
+                long ChapterId =  TypeChange.TurnStringTolong(wxInfo.ChapterId);
 
                 UserInfo userInfo = null;
                 if (sessionID > 0)
@@ -180,7 +193,7 @@ namespace ETHotfix
                             bool isAllDone = true;
                             for (int i = 0; i < chapterData.PlotIDArr.Length; i++)
                             {
-                                long plotId = chapterData.PlotIDArr[i];
+                                int plotId = (int)chapterData.PlotIDArr[i];
                                 if (userInfo.GameInfo.PlotIdArr.IndexOf(plotId) < 0)
                                 {
                                     isAllDone = false;
@@ -192,8 +205,13 @@ namespace ETHotfix
                             if (isAllDone) //通关此章节
                             {
                                 userInfo.GameInfo.ChapterId++;
-                                //                                ChapterData nextChapterData = (ChapterData)Game.Scene.GetComponent<ConfigComponent>()
-                                //                                    .Get(typeof(ChapterData), (int)userInfo.GameInfo.ChapterId);
+                                 ChapterData nextChapterData = (ChapterData)Game.Scene.GetComponent<ConfigComponent>()
+                                                                    .Get(typeof(ChapterData), (int)userInfo.GameInfo.ChapterId);
+                                if (nextChapterData != null)
+                                {
+                                    userInfo.GameInfo.PlotId = nextChapterData.PlotIDArr[0];
+                                    userInfo.GameInfo.PlotIndex = 0;
+                                }
                                 resNet.IsSuccess = true;
 
                             }
@@ -201,6 +219,7 @@ namespace ETHotfix
                             {
                                 resNet.IsSuccess = false;
                             }
+                            resNet.PlotId = userInfo.GameInfo.PlotId.ToString();
                             player.IsNeedCatch = true;
                             return Ok(resNet.ToJson());
                         }

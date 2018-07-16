@@ -20,6 +20,7 @@ namespace ETModel
         public List<string> WrongAnsArr { set; get; }//干扰项
         public int OptionNum { get; set; }//选择文字个数   
         public int RewardGoldNum { get; set; }//破关奖励
+        public int TipCostGold { get; set; }//提示消耗 
     }
     //一个对话内容
     public class OneDialog

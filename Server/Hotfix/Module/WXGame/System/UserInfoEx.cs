@@ -20,7 +20,8 @@ namespace ETHotfix
                 LoginRewardArr = new List<int>(data.SignRewardArr),
                 SignedNum = self.GameInfo.SignDayNum,
                 RemainSignNumToday = self.GameInfo.RemainSignNumToday,
-                ShareTodayNum = self.GameInfo.ShareNumToday
+                ShareTodayNum = self.GameInfo.ShareNumToday,
+                PassedPlotIdArr = self.GameInfo.PlotIdArr
 
             };
             return resNet;
@@ -34,6 +35,10 @@ namespace ETHotfix
             if(self.GameInfo == null)
             {
                 self.GameInfo = ComponentFactory.Create<GameInfoObj>();
+            }
+            if (self.GameInfo.PlotIdArr == null)
+            {
+                self.GameInfo.PlotIdArr = new List<int>();
             }
             if (self.GameOpArr == null)
             {

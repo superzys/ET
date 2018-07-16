@@ -31,6 +31,7 @@ namespace ETHotfix
     public class WxGainChapterRewardResNet
     {
         public bool IsSuccess { get; set; }
+        public string PlotId { get; set; }
         public int RewardGold { get; set; }
         public string UserGoldNum { get; set; }
     }

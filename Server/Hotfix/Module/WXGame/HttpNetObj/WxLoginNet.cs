@@ -32,6 +32,8 @@ namespace ETHotfix
         public int RemainSignNumToday { get; set; }
         public int ShareTodayNum { get; set; }
 
+        public List<int> PassedPlotIdArr { get; set; }
+
     }
 
 

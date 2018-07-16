@@ -27,6 +27,6 @@ namespace ETModel
         public long PlotId { get; set; }
 
         //打过的id数组。 这个可以用做进度
-        public List<long>  PlotIdArr { get; set; }
+        public List<int>  PlotIdArr { get; set; }
     }
 }

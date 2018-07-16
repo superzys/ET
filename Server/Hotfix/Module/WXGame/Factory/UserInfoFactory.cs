@@ -31,6 +31,13 @@ namespace ETHotfix
                 userInfo.GameOpArr = new List<GameOpObj>();
                 userInfo.DesignArr = new List<UserDesignObj>();
                 userInfo.GameInfo.ChapterId = 1;
+
+                ChapterData chapterData = (ChapterData)Game.Scene.GetComponent<ConfigComponent>()
+                    .Get(typeof(ChapterData), (int)1);
+                userInfo.GameInfo.PlotId = chapterData.PlotIDArr[0];
+                userInfo.GameInfo.PlotIndex = 0;
+
+                userInfo.GameInfo.PlotIdArr = new List<int>();
                 //                userInfo = userInfo;
                 await dbProxyComponent.Save(userInfo, false);
             }
