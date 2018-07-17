@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using ETModel;
+using MongoDB.Bson;
 
 namespace ETHotfix
 {
@@ -30,8 +31,19 @@ namespace ETHotfix
                     userInfo = player.GetComponent<UserInfo>();
                     if (userInfo != null)
                     {
-
-
+                        WxGetRankResNet resNet = new WxGetRankResNet();
+                        resNet.RankArr = new List<RankUserInfoNet>();
+                        RankUserInfoNet oneUser = new RankUserInfoNet()
+                        {
+                            rankNum = 1,
+                            nickName = userInfo.NickName,
+                            avatarUrl = userInfo.AvatarUrl,
+                            PveNum = userInfo.GameInfo.PlotIdArr.Count,
+                            ChapterId = userInfo.GameInfo.ChapterId+"",
+                            PlotId =  userInfo.GameInfo.PlotId+""
+                        };
+                        resNet.RankArr.Add(oneUser);
+                        return Ok(resNet.ToJson());
                     }
                 }
                 return Ok("{\"error\":1}");

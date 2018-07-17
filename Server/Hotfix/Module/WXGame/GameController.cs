@@ -122,7 +122,7 @@ namespace ETHotfix
 
                                     userInfo.GameInfo.PlotIdArr.Add(plotId);
                                     WxGainPlotRewardResNet resNet = new WxGainPlotRewardResNet();
-
+                                    Log.Info($"Gain PLot reward {ChapterId} {plotId}");
                                     userInfo.GameInfo.Gold += data.RewardGoldNum;
                                     resNet.RewardGold = data.RewardGoldNum;
                                     resNet.UserGoldNum = userInfo.GameInfo.Gold.ToString();
@@ -220,6 +220,7 @@ namespace ETHotfix
                                 resNet.IsSuccess = false;
                             }
                             resNet.PlotId = userInfo.GameInfo.PlotId.ToString();
+                            Log.Info($"jump chapter {ChapterId} {resNet.PlotId } ");
                             player.IsNeedCatch = true;
                             return Ok(resNet.ToJson());
                         }

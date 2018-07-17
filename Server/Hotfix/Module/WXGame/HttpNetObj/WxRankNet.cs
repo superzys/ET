@@ -15,7 +15,7 @@ namespace ETHotfix
 
     public class RankUserInfoNet
     {
-        public string rankNum { get; set; }
+        public int rankNum { get; set; }
         public string nickName { get; set; }
         public string avatarUrl { get; set; }
 
