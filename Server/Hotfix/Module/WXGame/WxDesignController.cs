@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using ETModel;
+using MongoDB.Bson;
 
 namespace ETHotfix
 {
@@ -25,16 +26,24 @@ namespace ETHotfix
                     userInfo = player.GetComponent<UserInfo>();
                     if (userInfo != null)
                     {
+                        UserDesignObj designObj = ComponentFactory.Create<UserDesignObj>();
+
+                        designObj.SetWxDesignObj(wxInfo);
+
+                        userInfo.DesignArr.Add(designObj);
 
                         player.IsNeedCatch = true;
+                        WxDesignResNet resNet = new WxDesignResNet();
+                        resNet.Status = 1;
+                        return Ok(resNet.ToJson());
                     }
                 }
                 return Ok("{\"error\":1}");
             }
             catch (Exception e)
             {
-                return Ok("\"error\" ");
                 Console.WriteLine(e);
+                return Ok("\"error\" ");
 
             }
         }

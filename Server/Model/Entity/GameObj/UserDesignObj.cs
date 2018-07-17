@@ -8,7 +8,7 @@ namespace ETModel
     /// <summary>
     /// 玩家设计的题目
     /// </summary>
-    public class UserDesignObj
+    public class UserDesignObj :Entity
     {
         public int LeftPhoto { get; set; }
         public int RightPhoto { get; set; }
@@ -16,7 +16,7 @@ namespace ETModel
         public List<string> WordsArr { get; set; }
 
         public List<string> TipsArr { get; set; }
-        //0 审核中，1 通过
+        //1 审核中，2 通过
         public int Status { get; set; }
     }
 }
