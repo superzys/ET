@@ -121,6 +121,11 @@ namespace ETHotfix
                                     }
 
                                     userInfo.GameInfo.PlotIdArr.Add(plotId);
+
+                                    //告诉排行榜组件 更新
+                                    WxRankMangerComponent wxRankCmp = Game.Scene.GetComponent<WxRankMangerComponent>();
+                                    wxRankCmp.UpdataOneUserPlotInfo(userInfo);
+
                                     WxGainPlotRewardResNet resNet = new WxGainPlotRewardResNet();
                                     Log.Info($"Gain PLot reward {ChapterId} {plotId}");
                                     userInfo.GameInfo.Gold += data.RewardGoldNum;

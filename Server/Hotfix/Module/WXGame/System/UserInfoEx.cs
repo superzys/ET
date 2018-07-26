@@ -27,6 +27,47 @@ namespace ETHotfix
             return resNet;
         }
         /// <summary>
+        /// 获取闯关排行对象
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static WxRankObj GetRankObj(this UserInfo self)
+        {
+            WxRankObj rankObj = new WxRankObj()
+            {
+                RankNum  = 10000,
+                UserId = self.Id,
+                AvatarUrl = self.AvatarUrl,
+                NickName = self.NickName,
+                Value =  self.GameInfo.PlotIdArr.Count
+            };
+            return rankObj;
+        }
+        public static WxRankObj GetWuJinRankObj(this UserInfo self)
+        {
+            WxRankObj rankObj = new WxRankObj()
+            {
+                RankNum = 10000,
+                UserId = self.Id,
+                AvatarUrl = self.AvatarUrl,
+                NickName = self.NickName,
+                Value = self.DesignArr.Count
+            };
+            return rankObj;
+        }
+        public static WxRankObj GetChuTiRankObj(this UserInfo self)
+        {
+            WxRankObj rankObj = new WxRankObj()
+            {
+                RankNum = 10000,
+                UserId = self.Id,
+                AvatarUrl = self.AvatarUrl,
+                NickName = self.NickName,
+                Value = self.GameInfo.PlotIdArr.Count
+            };
+            return rankObj;
+        }
+        /// <summary>
         /// 登录的时候数据监测
         /// </summary>
         /// <param name="self"></param>

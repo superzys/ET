@@ -4,10 +4,7 @@ using System.Text;
 
 namespace ETModel
 {
-    /// <summary>
-    /// 游戏者身上带个计时器组件，太久了就清除掉
-    /// </summary>
-    public class WxGamerTimerComponent : Entity
+    public class WxRankTimerComponent : Entity
     {
         /// <summary>
         /// player 销毁时关闭

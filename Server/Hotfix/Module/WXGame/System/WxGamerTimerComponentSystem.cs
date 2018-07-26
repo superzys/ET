@@ -13,7 +13,9 @@ namespace ETHotfix
             self.Awake();
         }
     }
-
+    /// <summary>
+    /// 定时存玩家数据
+    /// </summary>
     public static class WxGamerTimerComponentSystem
     {
         public static void Awake(this WxGamerTimerComponent self)
