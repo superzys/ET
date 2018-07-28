@@ -41,7 +41,7 @@ namespace ETHotfix
                         //能取到之前的用户的话
                         userInfo = await UserInfoFactory.GetOrCreate(userID);
                     }
-     
+
                     if (userInfo != null)
                     {
                         UserInfoFactory.OneUserOnLine(userInfo);
@@ -56,12 +56,12 @@ namespace ETHotfix
                 ReflexCopyData.CopyEntityToObj(wxLoginInfo, wxInfo);
 
                 WeChatAppDecrypt wxDecCmp = Game.Scene.GetComponent<WeChatAppDecrypt>();
-                //            OpenIdAndSessionKey sessionInfo = wxDecCmp.GetWechatUserSessionInfo(wxLoginInfo);
-                OpenIdAndSessionKey sessionInfo = new OpenIdAndSessionKey()
-                {
-                    openid = "12343214",
-                    session_key = "32324324324"
-                };
+                OpenIdAndSessionKey sessionInfo = wxDecCmp.GetWechatUserSessionInfo(wxLoginInfo);
+                //                OpenIdAndSessionKey sessionInfo = new OpenIdAndSessionKey()
+                //                {
+                //                    openid = "12343214",
+                //                    session_key = "32324324324"
+                //                };
                 WechatUserInfo wxUserInfo = new WechatUserInfo();
                 ReflexCopyData.CopyEntityToObj(wxUserInfo, wxInfo);
                 wxUserInfo.openId = sessionInfo.openid;
@@ -70,7 +70,7 @@ namespace ETHotfix
                 userInfo = await UserInfoFactory.GetOrCreate(wxUserInfo);
 
                 UserInfoFactory.OneUserOnLine(userInfo);
-                
+
                 WxLoginResNet reNet = userInfo.GetLoginResNetObj();
 
                 return Ok(reNet.ToJson());
@@ -83,7 +83,7 @@ namespace ETHotfix
 
             //            return Ok("登陆成功！");
         }
-      
+
 
         [Post] // url-> /Login
         public object Login(Account account)

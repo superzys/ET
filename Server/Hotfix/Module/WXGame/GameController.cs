@@ -34,7 +34,7 @@ namespace ETHotfix
                     userInfo = player.GetComponent<UserInfo>();
                     if (userInfo != null)
                     {
-                        if (userInfo.GameInfo.RemainSignNumToday > 0)
+                        if (userInfo.GameInfo.RemainSignNumToday > 0 || true)
                         {
                             UnitConfig data = (UnitConfig)Game.Scene.GetComponent<ConfigComponent>().Get(typeof(UnitConfig), 1);
                             //因为配置表可能更新了
@@ -105,7 +105,7 @@ namespace ETHotfix
                         {
                             //没打过的 并且确实是当前进度的章节
 //                      章节可重复不能此检测      userInfo.GameInfo.PlotIdArr.IndexOf(plotId) < 0 &&
-                            if (userInfo.GameInfo .PlotId == plotId && userInfo.GameInfo.ChapterId == ChapterId)
+                            if (userInfo.GameInfo .PlotId == plotId && userInfo.GameInfo.ChapterId == ChapterId || true)
                             {
                                 IssueData data = (IssueData)Game.Scene.GetComponent<ConfigComponent>()
                                     .Get(typeof(IssueData), (int)plotId);
@@ -181,7 +181,7 @@ namespace ETHotfix
                     userInfo = player.GetComponent<UserInfo>();
                     if (userInfo != null)
                     {
-                        if (userInfo.GameInfo.ChapterId == ChapterId)
+                        if (userInfo.GameInfo.ChapterId == ChapterId || true)
                         {
                             IssueData data = (IssueData)Game.Scene.GetComponent<ConfigComponent>()
                                 .Get(typeof(IssueData), (int)curPlotId);
