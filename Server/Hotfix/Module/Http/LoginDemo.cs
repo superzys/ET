@@ -7,7 +7,8 @@ using ETModel;
 
 namespace ETHotfix
 {
-    public class LoginDemo
+    [HttpHandler(AppType.Gate, "/")]
+    public class LoginDemo : AHttpHandler
     {
 
         [Get] // url-> /PushInfo?name=11&age=1111

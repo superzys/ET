@@ -26,4 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Model\Server.Model.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Module\WXGame\Charge\" />
+  </ItemGroup>
 </Project>

@@ -27,7 +27,7 @@ namespace ETHotfix
                 {
                     WxGetRankResNet resNet = new WxGetRankResNet();
                     WxRankMangerComponent wxRankManger = Game.Scene.GetComponent<WxRankMangerComponent>();
-                    resNet.RankArr =  wxRankManger.GetRankPlayerArr(wxInfo.RankType);
+                    resNet.RankArr =  wxRankManger.GetRankPlayerArrInMag(wxInfo.RankType);
                     return Ok(resNet.ToJson());
 
                     //                    WxUserMangerComponent wxUserManger = Game.Scene.GetComponent<WxUserMangerComponent>();

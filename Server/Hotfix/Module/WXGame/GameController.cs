@@ -224,6 +224,11 @@ namespace ETHotfix
                             {
                                 resNet.IsSuccess = false;
                             }
+
+                            //告诉排行榜组件 更新
+                            WxRankMangerComponent wxRankCmp = Game.Scene.GetComponent<WxRankMangerComponent>();
+                            wxRankCmp.UpdataOneUserPlotInfo(userInfo);
+
                             resNet.PlotId = userInfo.GameInfo.PlotId.ToString();
                             Log.Info($"jump chapter {ChapterId} {resNet.PlotId } ");
                             player.IsNeedCatch = true;

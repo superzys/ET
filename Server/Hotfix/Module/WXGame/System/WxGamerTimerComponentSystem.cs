@@ -32,6 +32,7 @@ namespace ETHotfix
         
             DBProxyComponent dbProxy = Game.Scene.GetComponent<DBProxyComponent>();
 
+            //这里竟然蹦过。 
             //开启计时器
             while (self.IsTimeing)
             {
