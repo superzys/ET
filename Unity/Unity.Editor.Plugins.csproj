@@ -329,7 +329,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Res\Config\BuffConfig.txt" />
+    <None Include="Assets\Res\Config\ChapterData.txt" />
     <None Include="Assets\Res\Config\GlobalProto.txt" />
+    <None Include="Assets\Res\Config\IssueData.txt" />
     <None Include="Assets\Res\Config\UnitConfig.txt" />
     <None Include="Assets\StreamingAssets\Version.txt" />
     <None Include="Assets\link.xml" />

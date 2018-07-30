@@ -1,0 +1,12 @@
+{"Id":1,"Name":"第一章","Desc":"米克尔","ChargeNum":0,"HardLv":1,"PlotIDArr":[1,2]}
+{"Id":2,"Name":"第二章","Desc":"纳洛","ChargeNum":0,"HardLv":2,"PlotIDArr":[2,3]}
+{"Id":3,"Name":"第三章","Desc":"麦德罗","ChargeNum":0,"HardLv":3,"PlotIDArr":[1,2,3]}
+{"Id":4,"Name":"第四章","Desc":"蒂娜","ChargeNum":1,"HardLv":4,"PlotIDArr":[1,2,3]}
+{"Id":5,"Name":"第5章","Desc":"米克尔","ChargeNum":0,"HardLv":5,"PlotIDArr":[1,2]}
+{"Id":6,"Name":"第6章","Desc":"纳洛","ChargeNum":0,"HardLv":6,"PlotIDArr":[2,3]}
+{"Id":7,"Name":"第三章","Desc":"麦德罗","ChargeNum":0,"HardLv":7,"PlotIDArr":[1,2,3]}
+{"Id":8,"Name":"第四章","Desc":"蒂娜","ChargeNum":1,"HardLv":8,"PlotIDArr":[1,2,3]}
+{"Id":9,"Name":"第一章","Desc":"米克尔","ChargeNum":0,"HardLv":9,"PlotIDArr":[1,2]}
+{"Id":10,"Name":"第二章","Desc":"纳洛","ChargeNum":0,"HardLv":10,"PlotIDArr":[2,3]}
+{"Id":11,"Name":"第三章","Desc":"麦德罗","ChargeNum":0,"HardLv":11,"PlotIDArr":[1,2,3]}
+{"Id":12,"Name":"第四章","Desc":"蒂娜","ChargeNum":1,"HardLv":12,"PlotIDArr":[1,2,3]}
