@@ -14,7 +14,8 @@ namespace ETHotfix
                 rankNum = self.RankNum,
                 nickName = self.NickName,
                 avatarUrl = self.AvatarUrl,
-                value = self.Value
+                value = self.Value,
+                value1 = self.Value1
             };
 
             return netObj;

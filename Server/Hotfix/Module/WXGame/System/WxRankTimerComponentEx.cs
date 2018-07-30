@@ -28,33 +28,52 @@ namespace ETHotfix
 
         public static async void StartPlayerTimer(this WxRankTimerComponent self)
         {
-            WxRankMangerComponent rankMngCmp = self.Entity as WxRankMangerComponent;
-
-            DBProxyComponent dbProxy = Game.Scene.GetComponent<DBProxyComponent>();
-
-            //开启计时器
-            while (self.IsTimeing)
+            try
             {
-                await self.timerComponent.WaitAsync(1000);
-                if (rankMngCmp != null)//每秒 
-                {
-                    for (int i = 0; i < rankMngCmp.allRankCmpArr.Count; i++)
-                    {
-                        WxRankCompontent rankCmp = rankMngCmp.allRankCmpArr[i];
-                        if (TimeHelper.ClientNowSeconds() - rankCmp.LastSaveTime > 300)//需要重新排行
-                        {
-                            if (rankCmp.RankType == (long)WxRankType.GameRank)//只有游戏排行五分钟拍一次
-                            {
-                                rankCmp.ReRankPlayer();
-                            }
-                            //所有的排行都要存入数据库/
-                            rankCmp.LastSaveTime = TimeHelper.ClientNowSeconds();
-                            await dbProxy.Save(rankCmp.rankInfo, true);
-                        }
-                    }
+                WxRankMangerComponent rankMngCmp = self.Entity as WxRankMangerComponent;
 
+                DBProxyComponent dbProxy = Game.Scene.GetComponent<DBProxyComponent>();
+                DateTime curTime = new DateTime();
+                //开启计时器
+                while (self.IsTimeing)
+                {
+                    await self.timerComponent.WaitAsync(1000);
+                    if (rankMngCmp != null)//每秒 
+                    {
+                        for (int i = 0; i < rankMngCmp.allRankCmpArr.Count; i++)
+                        {
+                            WxRankCompontent rankCmp = rankMngCmp.allRankCmpArr[i];
+                            if (TimeHelper.ClientNowSeconds() - rankCmp.LastSaveTime > 300)//需要重新排行
+                            {
+                                 curTime = new DateTime();
+                                if (rankCmp.RankType == (long) WxRankType.GameRank) //只有游戏排行五分钟拍一次
+                                {
+                                    rankCmp.rankInfo.LastSaveDay = curTime.Day;
+                                    rankCmp.ReRankPlayer();
+                                }
+                                else
+                                {
+                                    if (rankCmp.rankInfo.LastSaveDay != curTime.Day && curTime.Hour >=3)
+                                    {
+                                        rankCmp.rankInfo.LastSaveDay = curTime.Day;
+                                        rankCmp.ReRankPlayer();
+                                    }
+                                }
+                                //所有的排行都要存入数据库/
+                                rankCmp.LastSaveTime = TimeHelper.ClientNowSeconds();
+                                await dbProxy.Save(rankCmp.rankInfo, true);
+                            }
+                        }
+
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                Log.Info(e.ToString());
+
+            }
+           
         }
     }
 }

@@ -11,6 +11,7 @@ namespace ETModel
     [BsonIgnoreExtraElements]
     public class RankInfo : Entity
     {
+        public  int LastSaveDay { get; set; }
         public List<WxRankObj> RankPlayerArr = new List<WxRankObj>();
         public List<WxRankObj> CatchPlayerArr = new List<WxRankObj>();
     }

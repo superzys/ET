@@ -26,12 +26,12 @@ namespace ETHotfix
 
             self.AddComponent<WxRankTimerComponent>();
             WxRankCompontent gameRank = ComponentFactory.Create<WxRankCompontent, long>((long)WxRankType.GameRank);
-            WxRankCompontent wujinRank = ComponentFactory.Create<WxRankCompontent, long>((long)WxRankType.WujinRank);
             WxRankCompontent chutiRank = ComponentFactory.Create<WxRankCompontent, long>((long)WxRankType.ChutiRank);
+            WxRankCompontent wujinRank = ComponentFactory.Create<WxRankCompontent, long>((long)WxRankType.WujinRank);
 
             self.allRankCmpArr.Add(gameRank);
-            self.allRankCmpArr.Add(wujinRank);
             self.allRankCmpArr.Add(chutiRank);
+            self.allRankCmpArr.Add(wujinRank);
         }
 
         public static List<RankUserInfoNet> GetRankPlayerArrInMag(this WxRankMangerComponent self, int rankType)

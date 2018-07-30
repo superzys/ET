@@ -14,5 +14,11 @@ namespace ETModel
 
         //排行进度    不同的排行不一样
         public int Value { get; set; }
+        public int Value1 { get; set; }
+
+
+        //排行进度  最新的   不同的排行不一样
+        public int LastValue { get; set; }
+        public int LastValue1 { get; set; }
     }
 }

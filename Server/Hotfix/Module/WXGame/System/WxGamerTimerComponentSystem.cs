@@ -27,39 +27,48 @@ namespace ETHotfix
         }
         public static async void StartPlayerTimer(this WxGamerTimerComponent self)
         {
-            WxGamer player = self.Entity as WxGamer;
-            UserInfo userInfo = self.Entity.GetComponent<UserInfo>();
-        
-            DBProxyComponent dbProxy = Game.Scene.GetComponent<DBProxyComponent>();
-
-            //这里竟然蹦过。 
-            //开启计时器
-            while (self.IsTimeing)
+            try
             {
-                await self.timerComponent.WaitAsync(1000);
-                if (userInfo != null)//每秒要检测下将领信息
+                WxGamer player = self.Entity as WxGamer;
+                UserInfo userInfo = self.Entity.GetComponent<UserInfo>();
+
+                DBProxyComponent dbProxy = Game.Scene.GetComponent<DBProxyComponent>();
+
+                //这里竟然蹦过。 
+                //开启计时器
+                while (self.IsTimeing)
                 {
-                    //                    userInfo.HerosIdArr;
-                    if (TimeHelper.ClientNowSeconds() - player.LastSaveTime > 10)//需要存储数据
+                    await self.timerComponent.WaitAsync(1000);
+                    if (userInfo != null)//每秒要检测下将领信息
                     {
-                        if (player.IsNeedCatch)
+                        //                    userInfo.HerosIdArr;
+                        if (TimeHelper.ClientNowSeconds() - player.LastSaveTime > 10)//需要存储数据
                         {
-                            player.IsNeedCatch = false;
-                            player.LastSaveTime = TimeHelper.ClientNowSeconds();
-                            await dbProxy.Save(userInfo, true);
+                            if (player.IsNeedCatch)
+                            {
+                                player.IsNeedCatch = false;
+                                player.LastSaveTime = TimeHelper.ClientNowSeconds();
+                                await dbProxy.Save(userInfo, true);
+                            }
                         }
-                    }
-                    if (TimeHelper.ClientNowSeconds() - player.LastAliveTime > 500) //需要移出去
-                    {
-                        self.IsTimeing = false;
-                        player.LastSaveTime = TimeHelper.ClientNowSeconds();
-                        await dbProxy.Save(userInfo, false);
-                        Game.Scene.GetComponent<WxUserMangerComponent>().Remove(player.Id);
-                        player.Dispose();
-                        return;
+                        if (TimeHelper.ClientNowSeconds() - player.LastAliveTime > 500) //需要移出去
+                        {
+                            self.IsTimeing = false;
+                            player.LastSaveTime = TimeHelper.ClientNowSeconds();
+                            await dbProxy.Save(userInfo, false);
+                            Game.Scene.GetComponent<WxUserMangerComponent>().Remove(player.Id);
+                            player.Dispose();
+                            return;
+                        }
                     }
                 }
             }
+            catch (Exception e)
+            {
+                Log.Info(e.ToString());
+
+            }
+           
         }
     }
 }

@@ -12,7 +12,7 @@ namespace ETModel
     {
         public  long LastSaveTime { get; set; }
         public long RankType { get; set; }
-        public int DoorValue { set; get; } = 10;
+        public int DoorValue { set; get; } = 0;
         /// <summary>
         /// 存储的排行数据和队列数据
         /// </summary>

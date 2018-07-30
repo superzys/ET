@@ -39,7 +39,10 @@ namespace ETHotfix
                 UserId = self.Id,
                 AvatarUrl = self.AvatarUrl,
                 NickName = self.NickName,
-                Value =  self.GameInfo.PlotIdArr.Count
+                Value =  self.GameInfo.PlotIdArr.Count,
+                Value1 = (int)self.GameInfo.ChapterId,
+                LastValue = self.GameInfo.PlotIdArr.Count,
+                LastValue1 = (int)self.GameInfo.ChapterId
             };
             return rankObj;
         }
@@ -51,7 +54,8 @@ namespace ETHotfix
                 UserId = self.Id,
                 AvatarUrl = self.AvatarUrl,
                 NickName = self.NickName,
-                Value = self.DesignArr.Count
+                Value = self.DesignArr.Count,
+                Value1 = 0
             };
             return rankObj;
         }
@@ -63,7 +67,8 @@ namespace ETHotfix
                 UserId = self.Id,
                 AvatarUrl = self.AvatarUrl,
                 NickName = self.NickName,
-                Value = self.GameInfo.PlotIdArr.Count
+                Value = self.GameInfo.PlotIdArr.Count,
+                Value1 = 0
             };
             return rankObj;
         }

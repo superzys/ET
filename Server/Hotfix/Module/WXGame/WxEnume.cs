@@ -7,7 +7,7 @@ namespace ETHotfix
     public  enum WxRankType
     {
         GameRank = 0,
-        WujinRank ,
-        ChutiRank
+        ChutiRank,
+        WujinRank 
     }
 }
