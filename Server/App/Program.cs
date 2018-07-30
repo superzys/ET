@@ -26,6 +26,7 @@ namespace App
 					Log.Error("命令行参数apptype与配置不一致");
 					return;
 				}
+				
 
 				IdGenerater.AppId = options.AppId;
 
