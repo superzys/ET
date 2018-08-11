@@ -12,7 +12,7 @@ namespace ETHotfix
         {
             self.Run((context, next) =>
             {
-                Log.Info("这是第一个中间件....." + context.Request.Url.AbsolutePath);
+//                Log.Info("这是第一个中间件....." + context.Request.Url.AbsolutePath);
 
                 return next(context);
             });
@@ -20,7 +20,7 @@ namespace ETHotfix
 
             self.Run("/t", (c, n) =>
             {
-                Log.Info("这是第二个中间件 拦截 /t 请求，继续往后调用.....");
+//                Log.Info("这是第二个中间件 拦截 /t 请求，继续往后调用.....");
 
                 return n(c);
             });

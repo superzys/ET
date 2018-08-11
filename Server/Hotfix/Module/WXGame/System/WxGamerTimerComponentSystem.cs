@@ -48,6 +48,7 @@ namespace ETHotfix
                             {
                                 player.IsNeedCatch = false;
                                 player.LastSaveTime = TimeHelper.ClientNowSeconds();
+                                Log.Info("save userinfo");
                                 await dbProxy.Save(userInfo, true);
                             }
                         }
@@ -55,6 +56,7 @@ namespace ETHotfix
                         {
                             self.IsTimeing = false;
                             player.LastSaveTime = TimeHelper.ClientNowSeconds();
+                            Log.Info("save and kict userinfo");
                             await dbProxy.Save(userInfo, false);
                             Game.Scene.GetComponent<WxUserMangerComponent>().Remove(player.Id);
                             player.Dispose();
