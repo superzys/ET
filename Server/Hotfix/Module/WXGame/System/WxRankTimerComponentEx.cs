@@ -40,12 +40,12 @@ namespace ETHotfix
                     await self.timerComponent.WaitAsync(1000);
                     if (rankMngCmp != null)//每秒 
                     {
+                        curTime = DateTime.Now;
                         for (int i = 0; i < rankMngCmp.allRankCmpArr.Count; i++)
                         {
                             WxRankCompontent rankCmp = rankMngCmp.allRankCmpArr[i];
                             if (TimeHelper.ClientNowSeconds() - rankCmp.LastSaveTime > 300)//需要重新排行
                             {
-                                 curTime = new DateTime();
                                 if (rankCmp.RankType == (long) WxRankType.GameRank) //只有游戏排行五分钟拍一次
                                 {
                                     rankCmp.rankInfo.LastSaveDay = curTime.Day;

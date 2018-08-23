@@ -21,6 +21,7 @@ namespace ETHotfix
         {
             try
             {
+                self.RankType = type;
                 //此处应当从数据库读取数据
                 RankInfo rankInfo = await RankInfoFactory.GetOrCreate(type);
                 self.rankInfo = rankInfo;

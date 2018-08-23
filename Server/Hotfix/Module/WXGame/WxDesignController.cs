@@ -33,9 +33,15 @@ namespace ETHotfix
                         userInfo.DesignArr.Add(designObj);
 
                         player.IsNeedCatch = true;
+
+                        //告诉排行榜组件 更新
+                        WxRankMangerComponent wxRankCmp = Game.Scene.GetComponent<WxRankMangerComponent>();
+                        wxRankCmp.UpdataOneUserCreateIssueInfo(userInfo);
+
                         WxDesignResNet resNet = new WxDesignResNet();
                         resNet.Status = 1;
                         return Ok(resNet.ToJson());
+
                     }
                 }
                 return Ok("{\"error\":1}");

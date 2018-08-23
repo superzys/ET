@@ -55,7 +55,9 @@ namespace ETHotfix
                 AvatarUrl = self.AvatarUrl,
                 NickName = self.NickName,
                 Value = self.DesignArr.Count,
-                Value1 = 0
+                Value1 = 0,
+                LastValue = self.DesignArr.Count,
+                LastValue1 = 0
             };
             return rankObj;
         }
@@ -67,8 +69,10 @@ namespace ETHotfix
                 UserId = self.Id,
                 AvatarUrl = self.AvatarUrl,
                 NickName = self.NickName,
-                Value = self.GameInfo.PlotIdArr.Count,
-                Value1 = 0
+                Value = self.DesignArr.Count,
+                Value1 = 0,
+                LastValue = self.DesignArr.Count,
+                LastValue1 = 0
             };
             return rankObj;
         }
