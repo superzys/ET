@@ -20,7 +20,7 @@ namespace ETHotfix
 	//					continue;
 	//				}
 	//				InnerConfig innerConfig = startConfig.GetComponent<InnerConfig>();
-	//				Session serverSession = netInnerComponent.Get(innerConfig.IPEndPoint);
+	//				Session serverSession = netInnerComponent.GetBySessionId(innerConfig.IPEndPoint);
 	//				await serverSession.Call(new M2A_Reload());
 	//			}
 	//			reply(response);

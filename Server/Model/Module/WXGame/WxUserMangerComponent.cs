@@ -11,8 +11,14 @@ namespace ETModel
     public class WxUserMangerComponent :Entity
     {
         public static WxUserMangerComponent Instance { get; private set; }
-
-        protected  readonly  Dictionary<long, WxGamer> wxUserArr = new Dictionary<long, WxGamer>();
+        /// <summary>
+        /// 是sessionId 坐下标
+        /// WxGamer.id  是sessionId
+        /// </summary>
+        protected readonly  Dictionary<long, WxGamer> wxUserArr = new Dictionary<long, WxGamer>();
+        /// <summary>
+        /// 用户session 对比
+        /// </summary>
         protected readonly Dictionary<long, long> wxUserSessionArr = new Dictionary<long, long>();
 
         public void Awake()
@@ -20,7 +26,7 @@ namespace ETModel
             Instance = this;
         }
 
-        public void Add(WxGamer player,long userId)
+        public void Add(WxGamer player,long userid)
         {
             if (!this.wxUserArr.ContainsKey(player.Id))
             {
@@ -31,13 +37,13 @@ namespace ETModel
                 this.wxUserArr[player.Id] = player;
             }
 
-            if (!this.wxUserSessionArr.ContainsKey(userId))
+            if (!this.wxUserSessionArr.ContainsKey(userid))
             {
-                this.wxUserSessionArr.Add(userId, player.Id);
+                this.wxUserSessionArr.Add(userid, player.Id);
             }
             else
             {
-                this.wxUserSessionArr[userId] = player.Id;
+                this.wxUserSessionArr[userid] = player.Id;
             }
         }
         public long GetUserSessionId(long id)
@@ -48,8 +54,8 @@ namespace ETModel
 
         public WxGamer GetByUserId(long id)
         {
-            this.wxUserSessionArr.TryGetValue(id, out long sessionId);
-            if (sessionId > 0)
+            this.wxUserSessionArr.TryGetValue(id, out long SessionId);
+            if (SessionId > 0)
             {
                 this.wxUserArr.TryGetValue(id, out WxGamer gamer);
                 return gamer;
@@ -58,13 +64,13 @@ namespace ETModel
             return null;
         }
 
-        public WxGamer Get(long id)
+        public WxGamer GetBySessionId(long id)
         {
             this.wxUserArr.TryGetValue(id, out WxGamer gamer);
             return gamer;
         }
 
-        public void Remove(long id)
+        public void RemoveBySessionId(long id)
         {
             this.wxUserArr.Remove(id);
         }

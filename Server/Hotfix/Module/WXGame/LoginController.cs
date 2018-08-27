@@ -20,6 +20,10 @@ namespace ETHotfix
         {
             try
             {
+                if (wxInfo == null)
+                {
+                    return Ok("{\"error\":0}");
+                }
                 //有userid 并且可转换long
                 long userID = 0;
                 if (wxInfo.UserId != null && wxInfo.UserId != "")

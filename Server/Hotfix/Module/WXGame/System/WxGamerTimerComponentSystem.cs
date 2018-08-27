@@ -58,7 +58,7 @@ namespace ETHotfix
                             player.LastSaveTime = TimeHelper.ClientNowSeconds();
                             Log.Info("save and kict userinfo");
                             await dbProxy.Save(userInfo, false);
-                            Game.Scene.GetComponent<WxUserMangerComponent>().Remove(player.Id);
+                            Game.Scene.GetComponent<WxUserMangerComponent>().RemoveBySessionId(player.Id);
                             player.Dispose();
                             return;
                         }

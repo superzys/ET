@@ -30,7 +30,7 @@ namespace ETHotfix
                 {
                     WxUserMangerComponent wxUserManger = Game.Scene.GetComponent<WxUserMangerComponent>();
                     //能取到之前的用户的话
-                    WxGamer player = wxUserManger.Get(sessionID);
+                    WxGamer player = wxUserManger.GetBySessionId(sessionID);
                     userInfo = player.GetComponent<UserInfo>();
                     if (userInfo != null)
                     {
@@ -97,7 +97,7 @@ namespace ETHotfix
                 {
                     WxUserMangerComponent wxUserManger = Game.Scene.GetComponent<WxUserMangerComponent>();
                     //能取到之前的用户的话
-                    WxGamer player = wxUserManger.Get(sessionID);
+                    WxGamer player = wxUserManger.GetBySessionId(sessionID);
                     if (player != null)
                     {
                         userInfo = player.GetComponent<UserInfo>();
@@ -127,7 +127,7 @@ namespace ETHotfix
                                     wxRankCmp.UpdataOneUserPlotInfo(userInfo);
 
                                     WxGainPlotRewardResNet resNet = new WxGainPlotRewardResNet();
-                                    Log.Info($"Gain PLot reward {ChapterId} {plotId}");
+//                                    Log.Info($"Gain PLot reward {ChapterId} {plotId}");
                                     userInfo.GameInfo.Gold += data.RewardGoldNum;
                                     resNet.RewardGold = data.RewardGoldNum;
                                     resNet.UserGoldNum = userInfo.GameInfo.Gold.ToString();
@@ -177,7 +177,7 @@ namespace ETHotfix
                 {
                     WxUserMangerComponent wxUserManger = Game.Scene.GetComponent<WxUserMangerComponent>();
                     //能取到之前的用户的话
-                    WxGamer player = wxUserManger.Get(sessionID);
+                    WxGamer player = wxUserManger.GetBySessionId(sessionID);
                     userInfo = player.GetComponent<UserInfo>();
                     if (userInfo != null)
                     {
@@ -267,7 +267,7 @@ namespace ETHotfix
                 {
                     WxUserMangerComponent wxUserManger = Game.Scene.GetComponent<WxUserMangerComponent>();
                     //能取到之前的用户的话
-                    WxGamer player = wxUserManger.Get(sessionID);
+                    WxGamer player = wxUserManger.GetBySessionId(sessionID);
                     userInfo = player.GetComponent<UserInfo>();
                     if (userInfo != null)
                     {

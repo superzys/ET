@@ -22,7 +22,7 @@ namespace ETHotfix
                 {
                     WxUserMangerComponent wxUserManger = Game.Scene.GetComponent<WxUserMangerComponent>();
                     //能取到之前的用户的话
-                    WxGamer player = wxUserManger.Get(sessionID);
+                    WxGamer player = wxUserManger.GetBySessionId(sessionID);
                     userInfo = player.GetComponent<UserInfo>();
                     if (userInfo != null)
                     {

@@ -64,7 +64,14 @@ namespace ETHotfix
         /// <param name="userInfo"></param>
         public static void OneUserOnLine(UserInfo userInfo)
         {
-            WxGamer gamer = ComponentFactory.CreateWithId<WxGamer>(userInfo.InstanceId);
+            WxUserMangerComponent wxUserManger = Game.Scene.GetComponent<WxUserMangerComponent>();
+
+            WxGamer gamer = wxUserManger.GetByUserId(userInfo.Id);
+            if (gamer == null)
+            {
+                gamer = ComponentFactory.CreateWithId<WxGamer>(userInfo.InstanceId);
+            }
+            
             gamer.LastAliveTime = TimeHelper.ClientNowSeconds();
             gamer.IsNeedCatch = false;
             userInfo.FixCheckOnLogin();
@@ -73,7 +80,7 @@ namespace ETHotfix
 
             gamer.AddComponent<WxGamerTimerComponent>();
 
-            Game.Scene.GetComponent<WxUserMangerComponent>().Add(gamer, userInfo.Id);
+            Game.Scene.GetComponent<WxUserMangerComponent>().Add(gamer, userInfo.InstanceId);
         }
 
     }
