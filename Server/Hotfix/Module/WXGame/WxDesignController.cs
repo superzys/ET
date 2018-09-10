@@ -15,9 +15,9 @@ namespace ETHotfix
         {
             try
             {
+                UserInfo userInfo = null;
                 long sessionID = TypeChange.TurnStringTolong(wxInfo.SessonId);
 
-                UserInfo userInfo = null;
                 if (sessionID > 0)
                 {
                     WxUserMangerComponent wxUserManger = Game.Scene.GetComponent<WxUserMangerComponent>();

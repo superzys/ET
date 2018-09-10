@@ -20,12 +20,12 @@ namespace ETHotfix
         {
             try
             {
+                UserInfo userInfo = null;
                 long sessionID = 0;
                 if (wxInfo.SessonId != null && wxInfo.SessonId != "")
                 {
                     sessionID = TypeChange.TurnStringTolong(wxInfo.SessonId);
                 }
-                UserInfo userInfo = null;
                 if (sessionID > 0)
                 {
                     WxUserMangerComponent wxUserManger = Game.Scene.GetComponent<WxUserMangerComponent>();
@@ -87,12 +87,12 @@ namespace ETHotfix
         {
             try
             {
+                UserInfo userInfo = null;
                 long sessionID = TypeChange.TurnStringTolong(wxInfo.SessonId);
 
                 int plotId  = (int)TypeChange.TurnStringTolong(wxInfo.PlotId);
                 long ChapterId =  TypeChange.TurnStringTolong(wxInfo.ChapterId);
 
-                UserInfo userInfo = null;
                 if (sessionID > 0 && plotId > 0)
                 {
                     WxUserMangerComponent wxUserManger = Game.Scene.GetComponent<WxUserMangerComponent>();
@@ -167,12 +167,12 @@ namespace ETHotfix
         {
             try
             {
+                UserInfo userInfo = null;
                 long sessionID = TypeChange.TurnStringTolong(wxInfo.SessonId);
 
                 int curPlotId =  (int)TypeChange.TurnStringTolong(wxInfo.PlotId);
                 long ChapterId =  TypeChange.TurnStringTolong(wxInfo.ChapterId);
 
-                UserInfo userInfo = null;
                 if (sessionID > 0)
                 {
                     WxUserMangerComponent wxUserManger = Game.Scene.GetComponent<WxUserMangerComponent>();
@@ -257,12 +257,12 @@ namespace ETHotfix
         {
             try
             {
+                UserInfo userInfo = null;
                 long sessionID = 0;
                 if (wxInfo.SessonId != null && wxInfo.SessonId != "")
                 {
                     sessionID = TypeChange.TurnStringTolong(wxInfo.SessonId);
                 }
-                UserInfo userInfo = null;
                 if (sessionID > 0)
                 {
                     WxUserMangerComponent wxUserManger = Game.Scene.GetComponent<WxUserMangerComponent>();

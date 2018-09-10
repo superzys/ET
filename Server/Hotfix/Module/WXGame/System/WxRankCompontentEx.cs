@@ -26,6 +26,7 @@ namespace ETHotfix
                 RankInfo rankInfo = await RankInfoFactory.GetOrCreate(type);
                 self.rankInfo = rankInfo;
                 self.InitRankInfo(rankInfo);
+                self.ReRankPlayer();
             }
             catch (Exception e)
             {
@@ -196,6 +197,7 @@ namespace ETHotfix
         {
             try
             {
+                Log.Info($"重新排行 {self.RankType} on tap {self.rankInfo.RankPlayerArr.Count}  catch len {self.rankInfo.CatchPlayerArr.Count}");
                 for (int i = 0; i < self.rankInfo.RankPlayerArr.Count; i++)
                 {
                     WxRankObj rankObj = self.rankInfo.RankPlayerArr[i];
@@ -203,6 +205,7 @@ namespace ETHotfix
                     rankObj.Value = rankObj.LastValue;
                 }
 
+                List<WxRankObj> onTapNewArr = self.rankInfo.RankPlayerArr.OrderByDescending(u => u.Value).ToList();
                 if (self.rankInfo.CatchPlayerArr.Count > 0)
                 {
                     //更新自己的数据
@@ -212,31 +215,37 @@ namespace ETHotfix
                         rankObj.Value1 = rankObj.LastValue1;
                         rankObj.Value = rankObj.LastValue;
                     }
+   
 
-                    List<WxRankObj> newArr = self.rankInfo.CatchPlayerArr.OrderBy(u => u.Value).ToList();
-                    int valueNew = newArr[0].Value;
-                    int insertIdx = -1;
-                    for (int i = 0; i < self.rankInfo.RankPlayerArr.Count; i++)
+                    List<WxRankObj> newArr = self.rankInfo.CatchPlayerArr.OrderByDescending(u => u.Value).ToList();
+                    if (newArr.Count > 0)
                     {
-                        if (self.rankInfo.RankPlayerArr[i].Value < valueNew)//从这里开始插
+                        int valueNew = newArr[0].Value;
+                        int insertIdx = -1;
+                        for (int i = 0; i < onTapNewArr.Count; i++)
                         {
-                            insertIdx = i;
-                            break;
+                            if (onTapNewArr[i].Value < valueNew)//从这里开始插
+                            {
+                                insertIdx = i;
+                                break;
+                            }
                         }
+                        if (insertIdx == -1)
+                        {
+                            insertIdx = onTapNewArr.Count;
+                        }
+                        //新的插进去
+                        onTapNewArr.InsertRange(insertIdx, newArr);
                     }
-                    if (insertIdx == -1)
-                    {
-                        insertIdx = self.rankInfo.RankPlayerArr.Count;
-                    }
-                    //新的插进去
-                    self.rankInfo.RankPlayerArr.InsertRange(insertIdx, newArr);
+
                     //删除多的
-                    if (self.rankInfo.RankPlayerArr.Count > 100)
+                    if (onTapNewArr.Count > 100)
                     {
-                        self.rankInfo.RankPlayerArr.RemoveRange(100, self.rankInfo.RankPlayerArr.Count - 100);
+                        onTapNewArr.RemoveRange(100, onTapNewArr.Count - 100);
                     }
                     self.rankInfo.CatchPlayerArr.Clear();
                 }
+                self.rankInfo.RankPlayerArr = onTapNewArr;
             }
             catch (Exception e)
             {
